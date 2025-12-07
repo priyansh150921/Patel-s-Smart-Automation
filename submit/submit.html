@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inquiry Submitted</title>
+  <link rel="stylesheet" href="/CSS/success.css">
+
+</head>
+
+<body>
+
+  <div class="success-box">
+    <div class="tick">✔</div>
+    <h2>Inquiry Submitted Successfully!</h2>
+    <p id="count-text">Redirecting in <strong>5</strong> seconds...</p>
+
+    <a class="btn-dashboard" href="/Dashboard/Dashboard.html">
+      Go to Dashboard
+    </a>
+  </div>
+
+  <!-- Countdown + Redirect Script -->
+<script>let timeLeft = 10;
+    const text = document.getElementById("count-text");
+
+    const timer = setInterval(() => {
+      timeLeft--;
+      text.innerHTML = `Redirecting in <strong>${timeLeft}</strong> seconds...`;
+
+      if (timeLeft <= 0) {
+        clearInterval(timer);
+        window.location.href = "/Dashboard/Dashboard.html"; // 👉 Adjust here if needed
+      }
+    }, 1000);</script>
+
+
+</body>
+</html>

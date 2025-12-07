@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/CSS/Style.css">
+</head>
+
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo-circle">P</div>
+      <div>
+        <div class="brand-text-main">PATEL’S AUTOMATION</div>
+        <div class="brand-text-sub">SMART HOME · SECURITY · HVAC</div>
+      </div>
+    </div>
+    <nav>
+      <a href="/Dashboard/Dashboard.html">Home</a>
+      <a href="/Product /product.html">Products</a>
+      <a href="/HTML/Pakage.html">Packages</a>
+      <a href="/inquery /inquery.html">Inquiry</a>
+      <a href="/AboutUs/aboutus.html">About Us</a>
+    </nav>
+  </header>
+
+
+  <!-- INQUIRY -->
+  <section class="section" id="inquiry">
+    <h2 class="section-heading">Business Inquiry</h2>
+    <p class="section-sub">
+      Share basic details and our team will respond with a concept and budget band within 24 hours.
+    </p>
+
+    <div class="form-wrapper">
+      <form onsubmit="submitInquiry(event)" id="contactForm">
+        <div>
+          <div class="field-label">Full name</div>
+          <input type="text" id="name" placeholder="Your name" required>
+        </div>
+        <div>
+          <div class="field-label">Phone / WhatsApp
+            <input type="tel" id="phone" placeholder="+91-" maxlength="10" required>
+          </div>
+
+          <div>
+            <div class="field-label">Full Address</div>
+            <textarea id="fulladdress" placeholder="House No / Street / Area / Pincode" required></textarea>
+          </div>
+
+
+
+
+          <!--City Enter Fileds-->
+          <div>
+            <div class="field-label">City</div>
+            <input type="text" id="city" placeholder="Ahmedabad / Gandhinagar">
+          </div>
+          <div>
+
+            <!--Sate Selection Fields-->
+            <div>
+              <div class="field-label">State</div>
+              <select id="state" required>
+                <option value="">Select State</option>
+                <option value="Gujarat">Gujarat</option>
+                <option value="Rajasthan">Rajasthan</option>
+                <option value="Maharashtra">Maharashtra</option>
+              </select>
+            </div>
+
+            <div class="field-label" style="margin-top: 20px;">Pincode
+              <input type="tel" id="pincode" maxlength="6" required>
+            </div>
+
+            <!--Project Type Selection Field-->
+            <div style="margin-top: 10px;">
+              <div class="field-label">Project Type</div>
+              <select id="projectType" required>
+                <option value="">Select Project Type</option>
+                <option value="2BHK">2BHK</option>
+                <option value="3BHK">3BHK</option>
+                <option value="Villa">Villa</option>
+                <option value="Office">Office</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <!--Reqirement Field-->
+            <div style="margin-top: 20px;">
+              <div class="field-label">Requirements</div>
+              <textarea id="details"
+                placeholder="Example: 3BHK under renovation, want lights + security + AC automation..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit Inquiry</button>
+      </form>
+    </div>
+  </section>
+
+  <script>document.getElementById("phone").addEventListener("input", function () {
+      this.value = this.value.replace(/[^0-9+]/g, "");
+    });
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBmQwxv9R84x0O4pbNMKWU3k1P0GNg3TeA",
+    authDomain: "patel-s-smart-automation-12074.firebaseapp.com",
+    databaseURL: "https://patel-s-smart-automation-12074-default-rtdb.firebaseio.com",
+    projectId: "patel-s-smart-automation-12074",
+    storageBucket: "patel-s-smart-automation-12074.firebasestorage.app",
+    messagingSenderId: "699391080686",
+    appId: "1:699391080686:web:f5407b724f2fb4b6e4dbff",
+    measurementId: "G-N17RQ93B7N"
+    };
+
+    // initialize firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // reference your database
+    var contactFormDB = firebase.database().ref("contactForm");
+
+    function submitInquiry(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value; // Name Data
+      const phone = document.getElementById("phone").value; //Phone
+      const fulladdress = document.getElementById("fulladdress").value; //Full Addresg
+      const city = document.getElementById("city").value; //City
+      const state = document.getElementById("state").value; //state
+      const pincode = document.getElementById("pincode").value; //state
+      const projectType = document.getElementById("projectType").value;
+      const details = document.getElementById("details").value;
+
+      firebase.database().ref("inquiries").push({
+        name,
+        phone,
+        fulladdress,
+        city,
+        state,
+        pincode,
+        projectType,
+        details,
+      })
+        .then(() => {
+          window.location.href = "/submit/submit.html"; // Redirect page
+        })
+        .catch(error => {
+          alert("Something went wrong. Try again!");
+          console.error(error);
+        });
+    }
+
+
+  </script>
+
+
+</body>
+
+</html>
